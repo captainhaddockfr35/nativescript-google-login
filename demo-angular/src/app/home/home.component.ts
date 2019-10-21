@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { GoogleSignin } from 'nativescript-google-signin';
+import { GoogleLogin } from 'nativescript-google-login';
 
 @Component({
     selector: "Home",
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         // Init your component properties here.
-        GoogleSignin.init({
+        GoogleLogin.init({
             google: {
                 initialize: true,
                 serverClientId: "",
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
         // GoogleSignin.loginWithGoogle((result)=>{
         //     console.dir(result);
         // });
-        GoogleSignin.login(result=>{
+        GoogleLogin.login(result=>{
             console.dir(result);
         });
 

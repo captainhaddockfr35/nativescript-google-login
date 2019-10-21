@@ -1,6 +1,6 @@
-import { Common, ILoginResult, ILoginConfiguration } from './nativescript-google-signin.common';
+import { Common, ILoginResult, ILoginConfiguration } from './nativescript-google-login.common';
 
-export declare class GoogleSignin extends Common {
+export declare class GoogleLogin extends Common {
   // define your typings manually
   // or..
   // take the ios or android .d.ts files and copy/paste them here
@@ -16,4 +16,4 @@ export {
   ILoginConfiguration,
   IInitializationResult,
   ILoginResult
-} from "./nativescript-google-signin.common";
+} from "./nativescript-google-login.common";

@@ -8,11 +8,11 @@ import {
     IInitializationResult,
     merge,
     ILoginConfiguration
-} from "./nativescript-google-signin.common";
+} from "./nativescript-google-login.common";
 
 const LOGTAG_ON_GOOGLE_RESULT = "Google successCallback";
 
-export class GoogleSignin extends Common {
+export class GoogleLogin extends Common {
 
     private static googleSignIn: GIDSignIn = null;
     private static _googleProfileInfoCallback;
@@ -154,19 +154,19 @@ export class GoogleSignin extends Common {
 
     static init(config: ILoginConfiguration = {}): ILoginConfiguration {
         this.Config = merge(this.defaultConfig, config);
-        GoogleSignin.googleSignIn = GIDSignIn.sharedInstance();
-        GoogleSignin.googleSignIn.shouldFetchBasicProfile = GoogleSignin.Config.google.shouldFetchBasicProfile;
-        GoogleSignin.googleSignIn.clientID = GoogleSignin.Config.google.clientId;
-        GoogleSignin.googleSignIn.scopes = NSArray.arrayWithArray(<any>GoogleSignin.Config
+        GoogleLogin.googleSignIn = GIDSignIn.sharedInstance();
+        GoogleLogin.googleSignIn.shouldFetchBasicProfile = GoogleLogin.Config.google.shouldFetchBasicProfile;
+        GoogleLogin.googleSignIn.clientID = GoogleLogin.Config.google.clientId;
+        GoogleLogin.googleSignIn.scopes = NSArray.arrayWithArray(<any>GoogleLogin.Config
                 .google.scopes);
 
             // Setting 'googleSignIn.serverClientID' forces retrieval of an offline auth code in iOS.
             // Set it only if that's what the user is expecting to retrieve.
             if (
-                GoogleSignin.Config.google.serverClientId &&
-                GoogleSignin.Config.google.isRequestAuthCode
+                GoogleLogin.Config.google.serverClientId &&
+                GoogleLogin.Config.google.isRequestAuthCode
             ) {
-                GoogleSignin.googleSignIn.serverClientID = GoogleSignin.Config.google.serverClientId;
+                GoogleLogin.googleSignIn.serverClientID = GoogleLogin.Config.google.serverClientId;
             }
         return this.Config;
     }

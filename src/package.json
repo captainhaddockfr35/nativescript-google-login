@@ -1,8 +1,8 @@
 {
-	"name": "nativescript-google-signin",
+	"name": "nativescript-google-login",
 	"version": "1.0.0",
 	"description": "Your awesome NativeScript plugin.",
-	"main": "nativescript-google-signin",
+	"main": "nativescript-google-login",
 	"typings": "index.d.ts",
 	"nativescript": {
 		"platforms": {
@@ -12,7 +12,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/pboulch/nativescript-google-signin.git"
+		"url": "https://github.com/pboulch/nativescript-google-login.git"
 	},
 	"scripts": {
 		"tsc": "npm i && tsc",
@@ -27,7 +27,7 @@
 		"demo-angular.ios": "npm run tsc && cd ../demo-angular && tns run ios",
 		"demo-angular.android": "npm run tsc && cd ../demo-angular && tns run android",
 		"demo-angular.reset": "cd ../demo-angular && npx rimraf -- hooks node_modules platforms package-lock.json",
-		"plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-google-signin && tns plugin add ../src && cd ../demo-angular && tns plugin remove nativescript-google-signin && tns plugin add ../src",
+		"plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-google-login && tns plugin add ../src && cd ../demo-angular && tns plugin remove nativescript-google-login && tns plugin add ../src",
 		"clean": "npm run demo.reset && npm run demo-angular.reset && npx rimraf -- node_modules package-lock.json && npm i"
 	},
 	"keywords": [
@@ -41,10 +41,10 @@
 		"email": "youremail@yourdomain.com"
 	},
 	"bugs": {
-		"url": "https://github.com/pboulch/nativescript-google-signin/issues"
+		"url": "https://github.com/pboulch/nativescript-google-login/issues"
 	},
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/pboulch/nativescript-google-signin",
+	"homepage": "https://github.com/pboulch/nativescript-google-login",
 	"devDependencies": {
 		"tns-core-modules": "^6.0.0",
 		"tns-platform-declarations": "^6.0.0",

@@ -1,4 +1,4 @@
-import { NativescriptGoogleSignin } from 'nativescript-google-signin';
+import { NativescriptGoogleSignin } from 'nativescript-google-login';
 console.log(new NativescriptGoogleSignin().message);
 /*
 In NativeScript, a file with the same name as an XML file is known as

@@ -5,7 +5,7 @@ import {
     LoginResultType,
     merge,
     ILoginConfiguration
-} from "./nativescript-google-signin.common";
+} from "./nativescript-google-login.common";
 import { isNullOrUndefined } from "tns-core-modules/utils/types";
 import {
     android as Android,
@@ -28,7 +28,7 @@ const actionRunnable = (function() {
     });
 })();
 
-export class GoogleSignin extends Common {
+export class GoogleLogin extends Common {
     private static _googleClient: any; // com.google.android.gms.common.api.GoogleApiClient
     private static _rcGoogleSignIn: number = 597; // < 16 bits
 
@@ -37,31 +37,31 @@ export class GoogleSignin extends Common {
         let result : IInitializationResult = {
             isInitialized : false
         };
-        console.log("activity: " + GoogleSignin.Config.activity);
+        console.log("activity: " + GoogleLogin.Config.activity);
 
-        if (isNullOrUndefined(GoogleSignin.Config.activity)) {
-            GoogleSignin.Config.activity =
+        if (isNullOrUndefined(GoogleLogin.Config.activity)) {
+            GoogleLogin.Config.activity =
                 Android.foregroundActivity || Android.startActivity;
         }
 
         // Google
-        if (GoogleSignin.Config.google.initialize) {
-            result = GoogleSignin.initGoogle(result);
+        if (GoogleLogin.Config.google.initialize) {
+            result = GoogleLogin.initGoogle(result);
         }
 
-        if (!isNullOrUndefined(GoogleSignin.Config.activity)) {
+        if (!isNullOrUndefined(GoogleLogin.Config.activity)) {
             const onLoginResult = ({
                 requestCode,
                 resultCode,
                 intent
             }: AndroidActivityResultEventData) => {
-                if (requestCode === GoogleSignin._rcGoogleSignIn) {
+                if (requestCode === GoogleLogin._rcGoogleSignIn) {
                     const resultCtx: Partial<ILoginResult> = {};
-                    let callback = GoogleSignin._loginCallback;
+                    let callback = GoogleLogin._loginCallback;
                     let activityResultHandled = false;
 
                     try {
-                        if (requestCode === GoogleSignin._rcGoogleSignIn) {
+                        if (requestCode === GoogleLogin._rcGoogleSignIn) {
                             resultCtx.provider = "google";
 
                             activityResultHandled = true;
@@ -110,7 +110,7 @@ export class GoogleSignin extends Common {
                                 resultCtx.code = LoginResultType.Cancelled;
                             }
 
-                            GoogleSignin.logResult(
+                            GoogleLogin.logResult(
                                 resultCtx,
                                 LOGTAG_ON_ACTIVITY_RESULT
                             );
@@ -125,14 +125,14 @@ export class GoogleSignin extends Common {
                     if (!activityResultHandled) {
                         if (
                             !isNullOrUndefined(
-                                GoogleSignin.Config.onActivityResult
+                                GoogleLogin.Config.onActivityResult
                             )
                         ) {
                             console.log(
                                 "Handling onActivityResult() defined in config..."
                             );
 
-                            GoogleSignin.Config.onActivityResult(
+                            GoogleLogin.Config.onActivityResult(
                                 requestCode,
                                 resultCode,
                                 intent
@@ -164,12 +164,12 @@ export class GoogleSignin extends Common {
             uiAction.action = () => {
                 try {
                     const signInIntent = 
-                        GoogleSignin._googleClient.getSignInIntent();
+                    GoogleLogin._googleClient.getSignInIntent();
 
                     
-                    GoogleSignin.Config.activity.startActivityForResult(
+                    GoogleLogin.Config.activity.startActivityForResult(
                         signInIntent,
-                        GoogleSignin._rcGoogleSignIn
+                        GoogleLogin._rcGoogleSignIn
                     );
                 } catch (e) {
                     console.log(
@@ -179,7 +179,7 @@ export class GoogleSignin extends Common {
             };
 
             console.log("Starting activity for result...");
-            GoogleSignin.Config.activity.runOnUiThread(uiAction);
+            GoogleLogin.Config.activity.runOnUiThread(uiAction);
         } catch (e) {
             console.log("[ERROR] " + e);
 
@@ -202,16 +202,16 @@ export class GoogleSignin extends Common {
                 
 
 
-            if (!isNullOrUndefined(GoogleSignin.Config.google.serverClientId)) {
-                if (!GoogleSignin.Config.google.isRequestAuthCode) {
+            if (!isNullOrUndefined(GoogleLogin.Config.google.serverClientId)) {
+                if (!GoogleLogin.Config.google.isRequestAuthCode) {
                     console.log("Will request ID token");
                     gso = gso.requestIdToken(
-                        GoogleSignin.Config.google.serverClientId
+                        GoogleLogin.Config.google.serverClientId
                     );
                 } else {
                     console.log("Will request server auth code");
                     gso = gso.requestServerAuthCode(
-                        GoogleSignin.Config.google.serverClientId
+                        GoogleLogin.Config.google.serverClientId
                     );
                 }
             }
@@ -219,9 +219,7 @@ export class GoogleSignin extends Common {
             gso = gso.build();
 
             
-            GoogleSignin._googleClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(GoogleSignin.Config.activity, gso);
-
-        console.dir(GoogleSignin._googleClient);
+            GoogleLogin._googleClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(GoogleLogin.Config.activity, gso);
 
             //GoogleSignin._googleClient = com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(GoogleSignin.Config.activity.getApplicationContext(), optionBuilder);
             
