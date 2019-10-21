@@ -57,6 +57,7 @@ export interface ILoginResult {
     userToken?: string;
 }
 
+
 /**
  * Stores data of the result of an initialization.
  */
@@ -159,6 +160,7 @@ export function merge(to: Object, from: Object) {
 
 export abstract class Common extends Observable {
     static Config: ILoginConfiguration;
+    protected static _loginCallback: (result: Partial<ILoginResult>) => void;
     static defaultConfig: IConfig = {
         activity: void 0,
         google: {
