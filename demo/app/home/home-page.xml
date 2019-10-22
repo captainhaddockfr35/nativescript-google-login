@@ -8,5 +8,6 @@
 
     <GridLayout>
         <!-- Add your page content here -->
+        <Button text="Login" tap="Login"></Button>
     </GridLayout>
 </Page>
