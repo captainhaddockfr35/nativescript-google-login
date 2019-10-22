@@ -103,6 +103,8 @@ export interface IConfig {
      * @type android.app.Activity
      */
     activity: any;
+
+    viewController: any;
     /**
      * Google specific configuration.
      */
@@ -162,6 +164,7 @@ export abstract class Common extends Observable {
     protected static _loginCallback: (result: Partial<ILoginResult>) => void;
     static defaultConfig: IConfig = {
         activity: void 0,
+        viewController: void 0,
         google: {
             initialize: true,
             isRequestAuthCode: false,

@@ -69,16 +69,15 @@ export class GoogleLogin extends Common {
                 this.googleSignIn.delegate = delegate;
             }
             if (!this.googleSignIn.presentingViewController) {
-                this.googleSignIn.presentingViewController = delegate;
+                this.googleSignIn.presentingViewController = this.Config.viewController;
             }
-
             this.googleSignIn.signIn();
         }
     }
 
     private static createSignInDelegate() {
         const self = this;
-        class MySignInDelegate extends NSObject {
+        class GoogleSigninDelegate extends NSObject {
             static ObjCProtocols = [GIDSignInDelegate];
 
             constructor() {
@@ -149,7 +148,7 @@ export class GoogleLogin extends Common {
             }
         }
 
-        return new MySignInDelegate();
+        return new GoogleSigninDelegate();
     }
 
     static init(config: ILoginConfiguration = {}): ILoginConfiguration {

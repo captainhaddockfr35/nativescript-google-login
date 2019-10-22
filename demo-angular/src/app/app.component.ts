@@ -1,4 +1,3 @@
-import { GoogleLogin } from 'nativescript-google-login';
 import { Component } from "@angular/core";
 
 @Component({
