@@ -13,7 +13,6 @@ import {
 const LOGTAG_ON_GOOGLE_RESULT = "Google successCallback";
 
 export class GoogleLogin extends Common {
-
     private static googleSignIn: GIDSignIn = null;
     private static _googleProfileInfoCallback;
     private static googleFailCallback: (error: NSError) => void;
@@ -31,7 +30,7 @@ export class GoogleLogin extends Common {
         };
 
         this.googleFailCallback = (error: NSError) => {
-            console.log("onError() - "+LOGTAG_LOGIN_WITH_GOOGLE);
+            console.log("onError() - " + LOGTAG_LOGIN_WITH_GOOGLE);
 
             invokeLoginCallbackForGoogle({
                 code: LoginResultType.Failed,
@@ -40,7 +39,7 @@ export class GoogleLogin extends Common {
         };
 
         this.googleCancelCallback = () => {
-            console.log("onCancel() - "+LOGTAG_LOGIN_WITH_GOOGLE);
+            console.log("onCancel() - " + LOGTAG_LOGIN_WITH_GOOGLE);
 
             invokeLoginCallbackForGoogle({
                 code: LoginResultType.Cancelled
@@ -48,7 +47,9 @@ export class GoogleLogin extends Common {
         };
 
         this.googleSuccessCallback = result => {
-            console.log("onSuccess().onCompleted() - "+LOGTAG_LOGIN_WITH_GOOGLE);
+            console.log(
+                "onSuccess().onCompleted() - " + LOGTAG_LOGIN_WITH_GOOGLE
+            );
 
             invokeLoginCallbackForGoogle({
                 authCode: result.authCode,
@@ -62,15 +63,11 @@ export class GoogleLogin extends Common {
         };
 
         if (!!callback) {
-        this._googleProfileInfoCallback = callback;
+            this._googleProfileInfoCallback = callback;
 
             const delegate = this.createSignInDelegate();
-            if (!this.googleSignIn.delegate) {
-                this.googleSignIn.delegate = delegate;
-            }
-            if (!this.googleSignIn.presentingViewController) {
-                this.googleSignIn.presentingViewController = this.Config.viewController;
-            }
+            this.googleSignIn.delegate = delegate;
+            this.googleSignIn.presentingViewController = this.Config.viewController;
             this.googleSignIn.signIn();
         }
     }
@@ -106,7 +103,7 @@ export class GoogleLogin extends Common {
 
                         if (!self._googleProfileInfoCallback) {
                             console.log(
-                                "no callback set "+LOGTAG_ON_GOOGLE_RESULT
+                                "no callback set " + LOGTAG_ON_GOOGLE_RESULT
                             );
                         }
                     } catch (error) {
@@ -154,27 +151,24 @@ export class GoogleLogin extends Common {
     static init(config: ILoginConfiguration = {}): ILoginConfiguration {
         this.Config = merge(this.defaultConfig, config);
         GoogleLogin.googleSignIn = GIDSignIn.sharedInstance();
-        GoogleLogin.googleSignIn.shouldFetchBasicProfile = GoogleLogin.Config.google.shouldFetchBasicProfile;
+        GoogleLogin.googleSignIn.shouldFetchBasicProfile =
+            GoogleLogin.Config.google.shouldFetchBasicProfile;
         GoogleLogin.googleSignIn.clientID = GoogleLogin.Config.google.clientId;
-        GoogleLogin.googleSignIn.scopes = NSArray.arrayWithArray(<any>GoogleLogin.Config
-                .google.scopes);
+        GoogleLogin.googleSignIn.scopes = NSArray.arrayWithArray(<any>(
+            GoogleLogin.Config.google.scopes
+        ));
 
-            // Setting 'googleSignIn.serverClientID' forces retrieval of an offline auth code in iOS.
-            // Set it only if that's what the user is expecting to retrieve.
-            if (
-                GoogleLogin.Config.google.serverClientId &&
-                GoogleLogin.Config.google.isRequestAuthCode
-            ) {
-                GoogleLogin.googleSignIn.serverClientID = GoogleLogin.Config.google.serverClientId;
-            }
+        // Setting 'googleSignIn.serverClientID' forces retrieval of an offline auth code in iOS.
+        // Set it only if that's what the user is expecting to retrieve.
+        if (
+            GoogleLogin.Config.google.serverClientId &&
+            GoogleLogin.Config.google.isRequestAuthCode
+        ) {
+            GoogleLogin.googleSignIn.serverClientID =
+                GoogleLogin.Config.google.serverClientId;
+        }
         return this.Config;
     }
 
-    createSignin(){
-        
-    }
-
-    
-    
-
+    createSignin() {}
 }
