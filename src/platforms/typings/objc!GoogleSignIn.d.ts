@@ -114,6 +114,8 @@ declare class GIDSignIn extends NSObject {
 
 	presentingViewController: GIDSignInUIDelegate;
 
+	uiDelegate: GIDSignInUIDelegate;
+
 	disconnect(): void;
 
 	handleURLSourceApplicationAnnotation(url: NSURL, sourceApplication: string, annotation: any): boolean;

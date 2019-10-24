@@ -18,6 +18,7 @@ export class GoogleLogin extends Common {
     private static googleFailCallback: (error: NSError) => void;
     private static googleCancelCallback: () => void;
     private static googleSuccessCallback: (result: ILoginResult) => void;
+    private static delegate : any = null;
 
     static login(callback: (result: ILoginResult) => void) {
         const invokeLoginCallbackForGoogle = (resultCtx: ILoginResult) => {
@@ -74,14 +75,80 @@ export class GoogleLogin extends Common {
 
     private static createSignInDelegate() {
         const self = this;
-        class GoogleSigninDelegate extends NSObject {
-            static ObjCProtocols = [GIDSignInDelegate];
-
-            constructor() {
-                super();
+        if(GoogleLogin.delegate == null ){
+            class GoogleSigninDelegate extends NSObject {
+                static ObjCProtocols = [GIDSignInDelegate];
+    
+                constructor() {
+                    super();
+                }
+    
+                signInDidSignInForUserWithError(signIn, user, error: NSError) {
+                    if (error) {
+                        self.googleFailCallback(error);
+                    } else {
+                        try {
+                            const resultUser: ILoginResult = {
+                                code: LoginResultType.Success,
+                                userToken: user.profile.email,
+                                firstName: user.profile.givenName,
+                                lastName: user.profile.familyName,
+                                displayName: user.profile.name,
+                                photo: user.profile.imageURLWithDimension(100),
+                                authCode: user.serverAuthCode
+                                    ? user.serverAuthCode
+                                    : user.authentication.idToken,
+                                id: user.userID
+                            }; // Safe to send to the server // For client-side use only!
+    
+                            self.googleSuccessCallback(resultUser);
+    
+                            if (!self._googleProfileInfoCallback) {
+                                console.log(
+                                    "no callback set " + LOGTAG_ON_GOOGLE_RESULT
+                                );
+                            }
+                        } catch (error) {
+                            self.googleFailCallback(error);
+                        }
+                    }
+                }
+    
+                signInDidDisconnectWithUserWithError(signIn, user, error: NSError) {
+                    try {
+                        if (error) {
+                            self.googleFailCallback(error);
+                        } else {
+                            // googleSuccessCallback("logOut");
+                            self.googleCancelCallback();
+                        }
+                    } catch (error) {
+                        self.googleFailCallback(error);
+                    }
+                }
+    
+                // signInWillDispatchError(signIn, error) {
+                // }
+    
+                signInPresentViewController(signIn, viewController) {
+                    const uiview = ios.rootController;
+                    uiview.presentViewControllerAnimatedCompletion(
+                        viewController,
+                        true,
+                        null
+                    );
+                }
+    
+                signInDismissViewController(signIn, viewController) {
+                    viewController.dismissViewControllerAnimatedCompletion(
+                        true,
+                        null
+                    );
+                }
             }
-
-            signInDidSignInForUserWithError(signIn, user, error: NSError) {
+            this.delegate = new GoogleSigninDelegate();
+        } else {
+            this.delegate.signInDidSignInForUserWithError = function (signIn, user, error: NSError) {
                 if (error) {
                     self.googleFailCallback(error);
                 } else {
@@ -112,7 +179,7 @@ export class GoogleLogin extends Common {
                 }
             }
 
-            signInDidDisconnectWithUserWithError(signIn, user, error: NSError) {
+            this.delegate.signInDidDisconnectWithUserWithError = function(signIn, user, error: NSError) {
                 try {
                     if (error) {
                         self.googleFailCallback(error);
@@ -125,27 +192,12 @@ export class GoogleLogin extends Common {
                 }
             }
 
-            // signInWillDispatchError(signIn, error) {
-            // }
-
-            signInPresentViewController(signIn, viewController) {
-                const uiview = ios.rootController;
-                uiview.presentViewControllerAnimatedCompletion(
-                    viewController,
-                    true,
-                    null
-                );
-            }
-
-            signInDismissViewController(signIn, viewController) {
-                viewController.dismissViewControllerAnimatedCompletion(
-                    true,
-                    null
-                );
-            }
         }
 
-        return new GoogleSigninDelegate();
+        return this.delegate;
+        
+
+        
     }
 
     static init(config: ILoginConfiguration = {}): ILoginConfiguration {
