@@ -55,6 +55,8 @@ export class GoogleLogin extends Common {
             invokeLoginCallbackForGoogle({
                 authCode: result.authCode,
                 code: LoginResultType.Success,
+                firstName: result.firstName,
+                lastName: result.lastName,                
                 displayName: result.displayName,
                 photo: result.photo,
                 error: result.error,
@@ -160,7 +162,7 @@ export class GoogleLogin extends Common {
                             lastName: user.profile.familyName,
                             displayName: user.profile.name,
                             photo: user.profile.imageURLWithDimension(100),
-                            authCode: user.serverAuthCode
+                            authCode: GoogleLogin.Config.google.isRequestAuthCode
                                 ? user.serverAuthCode
                                 : user.authentication.idToken,
                             id: user.userID
