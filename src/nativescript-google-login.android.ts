@@ -4,7 +4,8 @@ import {
     ILoginResult,
     LoginResultType,
     merge,
-    ILoginConfiguration
+    ILoginConfiguration,
+    LOGTAG_LOGOUT
 } from "./nativescript-google-login.common";
 import { isNullOrUndefined } from "tns-core-modules/utils/types";
 import {
@@ -184,6 +185,17 @@ export class GoogleLogin extends Common {
             console.log("[ERROR] " + e);
 
             throw e;
+        }
+    }
+
+    static logout(callback: () => void) {
+        console.log("Starting Logout", LOGTAG_LOGOUT);
+        try {
+            GoogleLogin._googleClient.signOut();
+            callback();
+            console.log("[SUCCESS] logging out: ", LOGTAG_LOGOUT);
+        } catch (e) {
+            console.log("[ERROR] Logging out: " + e, LOGTAG_LOGOUT);
         }
     }
 
