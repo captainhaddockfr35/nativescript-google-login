@@ -196,6 +196,7 @@ export class GoogleLogin extends Common {
             console.log("[SUCCESS] logging out: ", LOGTAG_LOGOUT);
         } catch (e) {
             console.log("[ERROR] Logging out: " + e, LOGTAG_LOGOUT);
+            callback();
         }
     }
 
