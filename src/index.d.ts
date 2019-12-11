@@ -5,6 +5,7 @@ export declare class GoogleLogin extends Common {
   // or..
   // take the ios or android .d.ts files and copy/paste them here
   static login(callback: (result: ILoginResult) => void);
+  static logout(callback: () => void);
   static init(config: ILoginConfiguration): ILoginConfiguration;
 }
 
