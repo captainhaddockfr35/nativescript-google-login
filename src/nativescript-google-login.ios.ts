@@ -75,7 +75,7 @@ export class GoogleLogin extends Common {
         }
     }
 
-    static logOut(callback: () => void) {
+    static logout(callback: () => void) {
         console.log('Starting Logout', LOGTAG_LOGOUT);
         try {
             this.googleSignIn.signOut();

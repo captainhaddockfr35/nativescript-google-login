@@ -4,5 +4,9 @@
 
 <GridLayout class="page" #page>
     <!-- Add your page content here -->
-    <Button text="Login" (tap)="login()"></Button>
+    <StackLayout>
+        <Button text="Login" (tap)="login()"></Button>
+        <Button text="Logout" (tap)="logout()"></Button>
+    </StackLayout>
+    
 </GridLayout>
