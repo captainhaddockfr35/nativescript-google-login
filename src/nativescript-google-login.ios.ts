@@ -70,7 +70,7 @@ export class GoogleLogin extends Common {
 
             const delegate = this.createSignInDelegate();
             this.googleSignIn.delegate = delegate;
-            this.googleSignIn.presentingViewController = delegate;
+            this.googleSignIn.presentingViewController = this.Config.viewController;
             this.googleSignIn.signIn();
         }
     }
@@ -217,7 +217,6 @@ export class GoogleLogin extends Common {
     static init(config: ILoginConfiguration = {}): ILoginConfiguration {
         this.Config = merge(this.defaultConfig, config);
         GoogleLogin.googleSignIn = GIDSignIn.sharedInstance();
-        
         GoogleLogin.googleSignIn.shouldFetchBasicProfile =
             GoogleLogin.Config.google.shouldFetchBasicProfile;
         GoogleLogin.googleSignIn.clientID = GoogleLogin.Config.google.clientId;
