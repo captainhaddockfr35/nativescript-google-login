@@ -1,6 +1,6 @@
+import { AndroidActivityResultEventData, AndroidApplication, Application } from "@nativescript/core";
+import { isNullOrUndefined } from "@nativescript/core/utils/types";
 import { Common, IInitializationResult, ILoginResult, LoginResultType, merge, ILoginConfiguration, LOGTAG_LOGOUT } from "./nativescript-google-login.common";
-import { isNullOrUndefined } from "tns-core-modules/utils/types";
-import { android as Android, AndroidApplication, AndroidActivityResultEventData } from "tns-core-modules/application/application";
 
 const LOGTAG_ON_ACTIVITY_RESULT = "onActivityResult()";
 
@@ -29,7 +29,7 @@ export class GoogleLogin extends Common {
         console.log("activity: " + GoogleLogin.Config.activity);
 
         if (isNullOrUndefined(GoogleLogin.Config.activity)) {
-            GoogleLogin.Config.activity = Android.foregroundActivity || Android.startActivity;
+            GoogleLogin.Config.activity = Application.android.foregroundActivity || Application.android.startActivity;
         }
 
         // Google
@@ -107,11 +107,11 @@ export class GoogleLogin extends Common {
 
                     console.log("Calling Callback function with Results");
                     callback && callback(resultCtx);
-                    Android.off(AndroidApplication.activityResultEvent, onLoginResult);
+                    Application.android.off(AndroidApplication.activityResultEvent, onLoginResult);
                 }
             };
 
-            Android.on(AndroidApplication.activityResultEvent, onLoginResult);
+            Application.android.on(AndroidApplication.activityResultEvent, onLoginResult);
         }
 
         return result;

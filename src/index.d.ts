@@ -1,4 +1,4 @@
-import { Common, ILoginResult, ILoginConfiguration } from './nativescript-google-login.common';
+import { Common, ILoginResult, ILoginConfiguration } from './nativescript-google-login';
 
 export declare class GoogleLogin extends Common {
   // define your typings manually

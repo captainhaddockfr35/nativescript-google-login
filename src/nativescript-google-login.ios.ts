@@ -1,4 +1,4 @@
-import { ios } from "tns-core-modules/application/application";
+import { ios } from "@nativescript/core/application";
 import {
     ILoginResult,
     LoginResultType,
@@ -209,9 +209,6 @@ export class GoogleLogin extends Common {
         }
 
         return this.delegate;
-        
-
-        
     }
 
     static init(config: ILoginConfiguration = {}): ILoginConfiguration {

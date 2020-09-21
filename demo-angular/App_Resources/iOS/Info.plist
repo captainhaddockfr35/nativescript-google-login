@@ -43,20 +43,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<!--Google Management-->
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.123123123-172648sdfsd76f8s7d6f8sd</string>
-				<!-- It shoud look like this: com.googleusercontent.apps.123123123-172648sdfsd76f8s7d6f8sd -->
-				<!-- Get it from your GoogleService-Info.plist -->
-				<!-- Read more - https://developers.google.com/identity/sign-in/ios/start-integrating -->
-			</array>
-		</dict>
-	</array>
 </dict>
 </plist>
