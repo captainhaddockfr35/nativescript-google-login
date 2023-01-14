@@ -47,7 +47,7 @@
 	"homepage": "https://github.com/pboulch/nativescript-google-login",
 	"devDependencies": {
 		"@nativescript/types": "~7.0.0",
-		"@nativescript/webpack": "~3.0.0",
+		"@nativescript/webpack": "~5.0.12",
 		"@nativescript/core": "~7.0.0",
 		"typescript": "~3.9.0",
 		"prompt": "^1.0.0",
